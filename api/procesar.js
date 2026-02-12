@@ -3,8 +3,8 @@ export default function handler(req, res) {
 
   if (nombre === "error") {
     return res.status(400).json({
-      error: "Error",
-      mensaje: "Fallo al procesar. Intente de nuevo."
+      error: "Nombre 'error' no permitido",
+      mensaje: "Fallo simulada. Intente de nuevo con otro nombre."
     });
   }
 
