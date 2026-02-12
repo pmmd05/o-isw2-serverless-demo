@@ -21,11 +21,13 @@ test("procesar convierte el nombre a mayúsculas", () => {
   handler(req, res);
 
   assert.equal(res.statusCode, 200);
+  //Cambios en la prueba para Reto 2
   assert.deepEqual(res.body, {
   "resultado": "Nombre procesado: JUAN",
   "longitud": 4
   });
 });
+
 
 //Prueba Reto 1: Sin nombre
 test("procesar maneja nombre ausente", () => {
@@ -48,4 +50,29 @@ test("procesar maneja nombre ausente", () => {
 
   assert.equal(res.statusCode, 200);
   assert.ok(res.body.resultado.includes("ANÓNIMO"));
+});
+
+//Prueba Reto 3: Estructura JSON esperada
+test("procesar devuelve estructura JSON esperada", () => {
+  const req = { query: { nombre: "juan" } };
+
+  const res = {
+    statusCode: null,
+    body: null,
+    status(code) {
+      this.statusCode = code;
+      return this;
+    },
+    json(payload) {
+      this.body = payload;
+      return this;
+    }
+  };
+
+  handler(req, res);
+
+  assert.equal(res.statusCode, 200);
+  assert.deepEqual(Object.keys(res.body).sort(), ["longitud", "resultado"]);
+  assert.equal(typeof res.body.resultado, "string");
+  assert.equal(typeof res.body.longitud, "number");
 });
