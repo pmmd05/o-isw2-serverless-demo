@@ -98,5 +98,5 @@ test("procesar falla cuando nombre es 'error'", () => {
 
   assert.equal(res.statusCode, 400);
   assert.ok(res.body.error);
-  assert.equal(res.body.error, "Nombre inválido");
+  assert.equal(res.body.error, "Nombre 'error' no permitido");
 });
