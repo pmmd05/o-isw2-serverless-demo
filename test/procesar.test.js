@@ -76,3 +76,27 @@ test("procesar devuelve estructura JSON esperada", () => {
   assert.equal(typeof res.body.resultado, "string");
   assert.equal(typeof res.body.longitud, "number");
 });
+
+//Prueba Reto 4: Manejo de nombre "error"
+test("procesar falla cuando nombre es 'error'", () => {
+  const req = { query: { nombre: "error" } };
+
+  const res = {
+    statusCode: null,
+    body: null,
+    status(code) {
+      this.statusCode = code;
+      return this;
+    },
+    json(payload) {
+      this.body = payload;
+      return this;
+    }
+  };
+
+  handler(req, res);
+
+  assert.equal(res.statusCode, 400);
+  assert.ok(res.body.error);
+  assert.equal(res.body.error, "Nombre inválido");
+});
